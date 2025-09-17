@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-import fitz
-from app.pipeline import process_pdf_to_sheets
-
-def read_pdf(path):
-    text = ""
-    doc = fitz.open(path)
-    for page in doc:
-        text += page.get_text()
-    return text
-
-def run_milestone1(pdf_path: str):
-    print("Running...")
-    pdf_text = read_pdf(pdf_path)
-    process_pdf_to_sheets(pdf_text, semantic=False, batch_size=5)
-    print("Task Completed. Results written to Google Sheets.")
-
-if __name__ == "__main__":
-    run_milestone1("test/edge_usa-meta_nsa_new_plcn_fully_executed_0.pdf")
-=======
 import streamlit as st
 from app.ui.upload_section import render_upload_section
 from app.ui.score_section import render_score_section
@@ -59,4 +39,3 @@ elif analysis_type == "Alerts & Recommendations":
 
 elif analysis_type == "Integrations":
     st.info("Coming soon — Google Sheets / Slack integration.")
->>>>>>> 29c304c (Added UI and Improved data chunking)

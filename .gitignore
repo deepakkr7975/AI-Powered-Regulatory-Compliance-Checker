@@ -24,3 +24,5 @@ env/
 
 # Logs
 *.log
+service_account.json
+.env
