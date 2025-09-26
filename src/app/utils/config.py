@@ -1,14 +1,37 @@
+# config.py
 import os
+from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "service_account.json")
-SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
-SHEET_NAME = os.getenv("SHEET_NAME", "GDPR")
+MODEL_CONFIG = {
+    "primary": {
+        "provider": "groq",
+        "model_id": "llama-3.3-70b-versatile",
+        "client": Groq(api_key=os.getenv("GROQ_API_KEY"))
+    },
+    "groq_fallback_1": {
+        "provider": "groq",
+        "model_id": "llama3-70b-8192", 
+        "client": Groq(api_key=os.getenv("GROQ_API_KEY"))
+    },
+    "groq_fallback_2": {
+        "provider": "groq",
+        "model_id": "gemma-7b-it", 
+        "client": Groq(api_key=os.getenv("GROQ_API_KEY"))
+    },
+    "github_fallback": {
+        "provider": "github",
+        "model_id": "openai/gpt-4o",
+        "api_url": "https://models.github.ai/inference/chat/completions"
+    }
+}
 
-CHUNK_SIZE = int(os.getenv("CHUNK_SIZE"))
-CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", 100))
-BATCH_SIZE = int(os.getenv("BATCH_SIZE"))   
-MAX_WORKERS = int(os.getenv("MAX_WORKERS", 5)) 
+
+MODEL_PREFERENCE_ORDER = [
+    "primary", 
+    "groq_fallback_1", 
+    "groq_fallback_2", 
+    "github_fallback"
+]
